@@ -1,1 +1,49 @@
-<p>weather-forecast works!</p>
+<div fxLayout="column" fxLayoutAlign="center" fxLayoutGap="30px">
+
+  <div class="search-input">
+    <app-autocomplete-input
+      (selectedCity)="selectedCityChanged($event)"
+    ></app-autocomplete-input>
+  </div>
+
+  <ng-container *ngIf="futureForecast$ | async as futureForecast">
+
+    <div fxLayoutAlign="center">
+      <div
+        fxFlex="80"
+        class="forecast"
+        fxLayout="column"
+        fxLayoutAlign="center"
+        fxLayoutGap="30px">
+        <div class="forecast-header" fxLayoutAlign="space-between center">
+          <div fxLayout="column" fxLayoutGap="5px">
+            <span class="location">{{ currentLocaiton.name }}</span>
+            <span class="temperature">{{futureForecast[0] && futureForecast[0].day.temperature}}</span>
+          </div>
+          <button mat-raised-button color="primary">
+            <div
+              fxLayout="row"
+              fxLayoutAlign="space-between center"
+              fxLayoutGap="10px">
+              <span> add to favorites </span>
+              <mat-icon>favorite</mat-icon>
+            </div>
+          </button>
+        </div>
+
+        <div
+          class="forecast-details"
+          fxLayout="row"
+          fxLayout.lt-md="column"
+          fxLayoutAlign="space-between center">
+          <ng-container *ngFor="let dayForecast of futureForecast">
+            <app-day-forecast-card
+              [date]="dayForecast.date"
+              [forecast]="dayForecast.day"
+            ></app-day-forecast-card>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

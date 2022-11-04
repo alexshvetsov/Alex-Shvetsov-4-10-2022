@@ -1,0 +1,17 @@
+<form fxLayout="row" fxLayoutAlign="center">
+  <mat-form-field fxFlex="40%"  [appearance]="'standard'">
+    <mat-label>{{label || 'search ...'}}</mat-label> 
+    <input type="text"
+           placeholder="Pick one"
+           aria-label="Number" 
+           matInput
+           [formControl]="myControl"
+           [matAutocomplete]="auto">
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onValueSelected($event)" [displayWith]="displayFn">
+      <mat-option *ngFor="let option of filteredOptions$ | async" [value]="option">
+        {{option.name}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</form>
+
