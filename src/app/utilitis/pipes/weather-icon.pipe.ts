@@ -5,12 +5,11 @@ export const IMG_URL = `https://apidev.accuweather.com/developers/Media/Default/
 })
 export class WeatherIconPipe implements PipeTransform {
 
+
   transform(value: any): any {
     if (value < 10) {
       value = `0${value}`;
     }
-    console.log(`${IMG_URL}/${value}-s.png`);
-    
     return `${IMG_URL}/${value}-s.png`;
   }
 

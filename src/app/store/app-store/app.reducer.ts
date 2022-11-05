@@ -7,29 +7,31 @@ export interface State {
 }
 
 const initialState: State = {
-  units: 'C',
+  units: 'F',
   favorites: [],
 };
 
-export function shoppingListReducer(
+export function appStateReducer(
   state: State = initialState,
   action: AppActions.AppActions
 ) {
   switch (action.type) {
     case AppActions.TOGGLE_UNITS:
-      return { ...state,
-        units:state.units ==='C'?'F':'C'
-    };
+      return { ...state, units: state.units === 'C' ? 'F' : 'C' };
     case AppActions.UPDATE_FAVORITES:
-        const location=state.favorites.find(loc=>loc.id===action.payload.id)
-        let newFavorites:LocationInterface[]
-        if(location){
-             newFavorites=state.favorites.filter(loc=>loc.id===location.id)
-        }else{
-             newFavorites=[...state.favorites,action.payload]
-        }
-        return{...state, favorites:newFavorites}
+      const location = state.favorites.find(
+        (loc) => loc.id === action.payload.id
+      );
+      let newFavorites: LocationInterface[];
+      if (location) {
+        newFavorites = state.favorites.filter((loc) => loc.id !== location.id); 
+      } else {
+        newFavorites = [...state.favorites, action.payload];
+      }
+      console.log(newFavorites);
+      
+      return { ...state, favorites: newFavorites };
     default:
-        return state;
+      return state;
   }
 }

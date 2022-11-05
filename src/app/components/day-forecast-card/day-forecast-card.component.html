@@ -3,7 +3,7 @@
   <mat-card-subtitle>{{ date | date: "dd/MM/yyyy" }}</mat-card-subtitle>
   <mat-card-content>
     <!-- pipe will subscribe to store to get unit -->
-    <p>{{ forecast.temperature }}</p>
+    <p>{{ forecast.temperature|temperatureUnitsPipe:temperatureUnits  }}</p>
     <p>{{ forecast.description }}</p>
     <img src="{{forecast.icon| weatherIcon}} ">
   </mat-card-content>

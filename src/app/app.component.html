@@ -1,2 +1,29 @@
-<app-toolbar></app-toolbar>
-<router-outlet></router-outlet>
+<div [ngClass]="isDarkMode? 'dark-theme' : 'light-theme'">
+  <app-toolbar></app-toolbar>
+  <div fxLayoutAlign="end" class="toggle-area">
+    <div>
+      <div class="unit-toggle" fxLayoutAlign="center center" fxLayoutGap="10px">
+        <span fxFlexAlign="start">
+          Temperature Units: {{ isCelsius ? "C" : "F" }}
+        </span>
+        <mat-slide-toggle
+          color="primary"
+          [checked]="isCelsius"
+          (toggleChange)="unitsChange()"
+        >
+        </mat-slide-toggle>
+      </div>
+      <div class="unit-toggle" fxLayoutAlign="center center" fxLayoutGap="10px">
+        <span fxFlexAlign="start">
+          Switch Theme
+        </span>
+        <mat-slide-toggle
+          color="primary"
+          [(ngModel)]="isDarkMode"
+        >
+        </mat-slide-toggle>
+      </div>
+    </div>
+  </div>
+  <router-outlet></router-outlet>
+</div>

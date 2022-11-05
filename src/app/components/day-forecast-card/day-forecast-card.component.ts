@@ -1,20 +1,30 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { forecastDetails } from 'src/app/utilitis/models/dayForecastModel.model';
+import { Store } from '@ngrx/store';
+import * as FromApp from '../../store/app.reducer';
+import { Subscription,BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-day-forecast-card',
   templateUrl: './day-forecast-card.component.html',
-  styleUrls: ['./day-forecast-card.component.scss']
+  styleUrls: ['./day-forecast-card.component.scss'],
 })
-export class DayForecastCardComponent implements OnInit {
+export class DayForecastCardComponent implements OnInit, OnDestroy {
+  @Input() date: string;
+  @Input() location: string;
+  @Input() forecast: forecastDetails;
+  subscription: Subscription;
+  temperatureUnits: string;
 
-  @Input() date:string;
-  @Input() location:string;
-  @Input() forecast:forecastDetails;
-
-  constructor() { }
+  constructor(private store: Store<FromApp.AppState>) {}
 
   ngOnInit(): void {
+    this.subscription = this.store.select('appState').subscribe((stateData) => {
+      this.temperatureUnits = stateData.units;
+    });
   }
 
+  ngOnDestroy(): void {
+      this.subscription.unsubscribe()
+  }
 }

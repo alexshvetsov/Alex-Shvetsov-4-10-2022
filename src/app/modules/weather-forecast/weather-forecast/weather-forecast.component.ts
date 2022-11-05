@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { WeatherForecastService } from 'src/app/utilitis/services/weather-forecast.service';
-import { of, BehaviorSubject } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { take, map } from 'rxjs/operators';
 import { LocationInterface } from 'src/app/utilitis/models/locationInterface';
+import { Store } from '@ngrx/store';
+import * as FromApp from '../../../store/app.reducer';
+import * as AppStateActions from '../../../store/app-store/app.actions';
+
 @Component({
   selector: 'app-weather-forecast',
   templateUrl: './weather-forecast.component.html',
@@ -42,11 +46,19 @@ export class WeatherForecastComponent implements OnInit {
     },
   ]);
   currentLocaiton: LocationInterface={id:'215854',name:'Tel Aviv'}
-
-  constructor(private weatherForecastService: WeatherForecastService) {}
+  isFavorite$!:Observable<boolean>
+  isFavorite!:boolean
+  constructor(private weatherForecastService: WeatherForecastService,
+    private store: Store<FromApp.AppState>
+    ) {}
 
   ngOnInit(): void {
+    this.checkIsFavorite()
     // this.weatherForecastService.getFutureWeather('318251').subscribe((value)=>console.log(value))
+  }
+
+  checkIsFavorite():void{
+    this.store.select('appState').subscribe((appState=>this.isFavorite=appState.favorites.some(loc=>loc.id==this.currentLocaiton.id)))
   }
 
   selectedCityChanged(value: LocationInterface): void {
@@ -57,5 +69,9 @@ export class WeatherForecastComponent implements OnInit {
       .subscribe((value) => {
         this.futureForecast$.next(value);
       });
+  }
+
+  updateFavorites(){
+    this.store.dispatch(new AppStateActions.UpdateFavorites(this.currentLocaiton));
   }
 }

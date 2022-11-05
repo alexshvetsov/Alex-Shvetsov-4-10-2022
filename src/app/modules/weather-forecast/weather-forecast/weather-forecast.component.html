@@ -1,5 +1,4 @@
 <div fxLayout="column" fxLayoutAlign="center" fxLayoutGap="30px">
-
   <div class="search-input">
     <app-autocomplete-input
       (selectedCity)="selectedCityChanged($event)"
@@ -7,7 +6,6 @@
   </div>
 
   <ng-container *ngIf="futureForecast$ | async as futureForecast">
-
     <div fxLayoutAlign="center">
       <div
         fxFlex="80"
@@ -24,9 +22,10 @@
             <div
               fxLayout="row"
               fxLayoutAlign="space-between center"
-              fxLayoutGap="10px">
-              <span> add to favorites </span>
-              <mat-icon>favorite</mat-icon>
+              fxLayoutGap="10px"
+              (click)="updateFavorites()">
+              <span>{{ isFavorite ? "remove from favorites" : "add to favorites" }} </span>
+              <mat-icon>{{ isFavorite ? "favorite_border" : "favorite"}}</mat-icon>
             </div>
           </button>
         </div>

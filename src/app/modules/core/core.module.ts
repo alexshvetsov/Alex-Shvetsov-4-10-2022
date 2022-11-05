@@ -7,13 +7,15 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { DayForecastCardComponent } from 'src/app/components/day-forecast-card/day-forecast-card.component';
 import { ToolbarComponent } from 'src/app/components/toolbar/toolbar.component';
 import { WeatherIconPipe } from 'src/app/utilitis/pipes/weather-icon.pipe';
+import { TemperatureUnitsPipe } from 'src/app/utilitis/pipes/temperature-units.pipe';
 
 @NgModule({
   declarations: [
     AutocompleteInputComponent,
     ToolbarComponent,
     DayForecastCardComponent,
-    WeatherIconPipe
+    WeatherIconPipe,
+    TemperatureUnitsPipe
   ],
   imports: [
     CommonModule,
@@ -30,7 +32,8 @@ import { WeatherIconPipe } from 'src/app/utilitis/pipes/weather-icon.pipe';
     FlexLayoutModule,
     ToolbarComponent,
     DayForecastCardComponent,
-    WeatherIconPipe
+    WeatherIconPipe,
+    TemperatureUnitsPipe
   ],
 })
 export class CoreModule {}
