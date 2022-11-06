@@ -1,16 +1,30 @@
 <mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="center center">
-    <mat-toolbar-row fxFlex="grow" fxLayoutAlign="space-between center">
-        <span>Wheater App</span>
+  <mat-toolbar-row fxFlex="grow" fxLayoutAlign="space-between center">
+    <span>Wheater App</span>
 
-        <div fxLayout="row" fxLayoutAlign="center " fxLayoutGap="10px" >
-            <button color="accent" mat-flat-button fxLayout="row" fxLayoutAlign="space-between center">
-              <a routerLink="/forecast"> Forcast </a>
-              <mat-icon>wb_sunny</mat-icon>
-            </button>
-            <button color="accent" mat-flat-button fxLayout="row" fxLayoutAlign="space-between center">
-                <a routerLink="/favorites"> Favorites </a>
-                <mat-icon>favorite_border</mat-icon>
-              </button>
-        </div>
-    </mat-toolbar-row>
+    <div fxLayout="row" fxLayoutAlign="center " fxLayoutGap="10px">
+      <a routerLink="/forecast">
+        <button
+          color="accent"
+          mat-flat-button
+          fxLayout="row"
+          fxLayoutAlign="space-between center"
+        >
+          <span>Forcast </span>
+          <mat-icon>wb_sunny</mat-icon>
+        </button>
+      </a>
+      <a routerLink="/favorites">
+        <button
+          color="accent"
+          mat-flat-button
+          fxLayout="row"
+          fxLayoutAlign="space-between center"
+        >
+          <span> Favorites </span>
+          <mat-icon>favorite_border</mat-icon>
+        </button>
+      </a>
+    </div>
+  </mat-toolbar-row>
 </mat-toolbar>

@@ -3,7 +3,8 @@ import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { DayForecastInterface } from '../models/dayForecastModel.model';
+import { DayForecastInterface } from '../models/dayForecast.interface';
+import { LocationForecastInterface } from '../models/locationForecast.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -27,10 +28,17 @@ export class WeatherForecastService {
     );
   }
 
-  getCurrentWeather(cityKey: string): Observable<any> {
+  getCurrentWeather(cityKey: string): Observable<LocationForecastInterface> {
     return this.http.get(
       `${this.currentWeatherURL}/${cityKey}?apikey=${this.API_KEY}`
-    );
+    ).pipe(map(value=>{
+      return{
+        id:cityKey,
+        temperature:value[0].Temperature.Imperial.Value,
+        iconNumber:value[0].WeatherIcon,
+        description:value[0].WeatherText,
+      }
+    }))
   }
 
   getFutureWeather(cityKey: string): Observable<DayForecastInterface> {
@@ -45,12 +53,12 @@ export class WeatherForecastService {
               day: {
                 temperature: value.Temperature.Maximum.Value,
                 description: value.Day.IconPhrase,
-                icon: value.Day.Icon,
+                iconNumber: value.Day.Icon,
               },
               night: {
                 temperature: value.Temperature.Minimum.Value,
                 description: value.Night.IconPhrase,
-                icon: value.Night.Icon,
+                iconNumber: value.Night.Icon,
               },
             };
           });
@@ -59,6 +67,8 @@ export class WeatherForecastService {
   }
 
   getByLocation(lat: number, long: number) {
+    console.log('asds')
+
     return this.http.get(
       `${this.locationURL}?apikey=${this.API_KEY}q=${lat}%${long}`
     );

@@ -1,4 +1,4 @@
-<div [ngClass]="isDarkMode? 'dark-theme' : 'light-theme'">
+<div [ngClass]="isDarkMode? 'dark-theme' : 'light-theme'" fxLayout="column">
   <app-toolbar></app-toolbar>
   <div fxLayoutAlign="end" class="toggle-area">
     <div>
@@ -25,5 +25,8 @@
       </div>
     </div>
   </div>
-  <router-outlet></router-outlet>
+  <div fxFlex="grow">
+
+    <router-outlet></router-outlet>
+  </div>
 </div>

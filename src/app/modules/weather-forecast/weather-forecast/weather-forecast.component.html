@@ -25,7 +25,7 @@
               fxLayoutGap="10px"
               (click)="updateFavorites()">
               <span>{{ isFavorite ? "remove from favorites" : "add to favorites" }} </span>
-              <mat-icon>{{ isFavorite ? "favorite_border" : "favorite"}}</mat-icon>
+              <mat-icon>{{ !isFavorite ? "favorite_border" : "favorite"}}</mat-icon>
             </div>
           </button>
         </div>

@@ -8,10 +8,12 @@ import { CoreModule } from './modules/core/core.module';
 import { StoreModule } from '@ngrx/store';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import * as fromApp from './store/app.reducer';
+import { ToolbarComponent } from 'src/app/components/toolbar/toolbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    ToolbarComponent
   ],
   imports: [
     BrowserAnimationsModule,

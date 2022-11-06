@@ -5,6 +5,6 @@
     <!-- pipe will subscribe to store to get unit -->
     <p>{{ forecast.temperature|temperatureUnitsPipe:temperatureUnits  }}</p>
     <p>{{ forecast.description }}</p>
-    <img src="{{forecast.icon| weatherIcon}} ">
+    <img src="{{forecast.iconNumber| weatherIcon}} ">
   </mat-card-content>
 </mat-card>

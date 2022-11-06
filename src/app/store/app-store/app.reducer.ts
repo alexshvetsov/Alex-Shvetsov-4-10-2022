@@ -1,9 +1,9 @@
-import { LocationInterface } from 'src/app/utilitis/models/locationInterface';
+import { LocationForecastInterface } from 'src/app/utilitis/models/locationForecast.interface';
 import * as AppActions from './app.actions';
 
 export interface State {
   units: string;
-  favorites: LocationInterface[];
+  favorites: LocationForecastInterface[];
 }
 
 const initialState: State = {
@@ -22,13 +22,13 @@ export function appStateReducer(
       const location = state.favorites.find(
         (loc) => loc.id === action.payload.id
       );
-      let newFavorites: LocationInterface[];
+      let newFavorites: LocationForecastInterface[];
       if (location) {
         newFavorites = state.favorites.filter((loc) => loc.id !== location.id); 
       } else {
         newFavorites = [...state.favorites, action.payload];
       }
-      console.log(newFavorites);
+      console.log('newFavorites',newFavorites);
       
       return { ...state, favorites: newFavorites };
     default:

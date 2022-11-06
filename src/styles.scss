@@ -10,6 +10,8 @@ $dark-theme:   mat-dark-theme($dark-primary, $dark-accent);
 
 .dark-theme {
   @include angular-material-theme($dark-theme);
+  background-color: gray;
+  height: 100%;
 }
 
 // Light theme

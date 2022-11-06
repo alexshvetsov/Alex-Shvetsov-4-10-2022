@@ -9,5 +9,5 @@ export interface DayForecastInterface {
 export interface forecastDetails{
     temperature: number;
     description: string;
-    icon:number
+    iconNumber:number
   };

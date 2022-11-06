@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { forecastDetails } from 'src/app/utilitis/models/dayForecastModel.model';
+import { forecastDetails } from 'src/app/utilitis/models/dayForecast.interface';
 import { Store } from '@ngrx/store';
 import * as FromApp from '../../store/app.reducer';
 import { Subscription,BehaviorSubject } from 'rxjs';
@@ -22,6 +22,8 @@ export class DayForecastCardComponent implements OnInit, OnDestroy {
     this.subscription = this.store.select('appState').subscribe((stateData) => {
       this.temperatureUnits = stateData.units;
     });
+
+
   }
 
   ngOnDestroy(): void {

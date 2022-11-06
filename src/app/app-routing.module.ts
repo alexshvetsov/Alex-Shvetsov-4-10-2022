@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: 'forecast',
+    pathMatch:"full",
     loadChildren: () =>
       import('./modules/weather-forecast/weather-forecast.module').then(
         (m) => m.WeatherForecastModule

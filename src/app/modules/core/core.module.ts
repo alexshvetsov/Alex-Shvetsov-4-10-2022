@@ -5,14 +5,12 @@ import { AutocompleteInputComponent } from 'src/app/components/autocomplete-inpu
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { DayForecastCardComponent } from 'src/app/components/day-forecast-card/day-forecast-card.component';
-import { ToolbarComponent } from 'src/app/components/toolbar/toolbar.component';
 import { WeatherIconPipe } from 'src/app/utilitis/pipes/weather-icon.pipe';
 import { TemperatureUnitsPipe } from 'src/app/utilitis/pipes/temperature-units.pipe';
 
 @NgModule({
   declarations: [
     AutocompleteInputComponent,
-    ToolbarComponent,
     DayForecastCardComponent,
     WeatherIconPipe,
     TemperatureUnitsPipe
@@ -30,7 +28,6 @@ import { TemperatureUnitsPipe } from 'src/app/utilitis/pipes/temperature-units.p
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
-    ToolbarComponent,
     DayForecastCardComponent,
     WeatherIconPipe,
     TemperatureUnitsPipe

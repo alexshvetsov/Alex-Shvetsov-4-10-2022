@@ -1,1 +1,16 @@
-<p>favorite-locations works!</p>
+<div fxLayout="row" fxLayoutAlign="center">
+  <div fxFlex="80" fxLayout="column" fxLayoutAlign="center">
+    <div>Favorite Locations Forecast</div>
+    <div fxLayout="row" fxLayoutAlign="space-around">
+      <ng-container *ngFor="let location of favoritesForecasts$ | async">
+        <app-day-forecast-card
+          [forecast]="{
+            temperature: location.temperature,
+            description: location.description,
+            iconNumber: location.iconNumber
+          }"
+        ></app-day-forecast-card>
+      </ng-container>
+    </div>
+  </div>
+</div>
