@@ -67,8 +67,6 @@ export class WeatherForecastService {
   }
 
   getByLocation(lat: number, long: number) {
-    console.log('asds')
-
     return this.http.get(
       `${this.locationURL}?apikey=${this.API_KEY}q=${lat}%${long}`
     );

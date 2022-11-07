@@ -48,8 +48,6 @@ export class AutocompleteInputComponent implements OnInit {
             if ( cities && cities.length === 1 && this.myControl.value) {
               this.myControl.patchValue(cities[0])
               const selectedCity:LocationInterface={id:cities[0].Key, name:cities[0].LocalizedName}
-              console.log( this.myControl.value);
-              
               this.selectedCity.emit(selectedCity && selectedCity)
             }
             return (

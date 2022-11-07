@@ -21,8 +21,10 @@ export function appStateReducer(
   switch (action.type) {
     case AppActions.TOGGLE_UNITS:
       return { ...state, units: state.units === 'C' ? 'F' : 'C' };
+      
       case AppActions.CHANGE_CURRENT_LOCATION:
         return { ...state, currentLocation: action.payload };
+
     case AppActions.UPDATE_FAVORITES:
       const location = state.favorites.find(
         (loc) => loc.id === action.payload.id
@@ -33,8 +35,6 @@ export function appStateReducer(
       } else {
         newFavorites = [...state.favorites, action.payload];
       }
-      console.log('newFavorites',newFavorites);
-      
       return { ...state, favorites: newFavorites };
     default:
       return state;

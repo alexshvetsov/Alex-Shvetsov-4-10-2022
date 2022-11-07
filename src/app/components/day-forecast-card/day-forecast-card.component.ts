@@ -3,6 +3,8 @@ import { forecastDetails } from 'src/app/utilitis/models/dayForecast.interface';
 import { Store } from '@ngrx/store';
 import * as FromApp from '../../store/app.reducer';
 import { Subscription, BehaviorSubject } from 'rxjs';
+import { Router } from '@angular/router';
+import * as AppStateActions from '../../store/app-store/app.actions';
 
 @Component({
   selector: 'app-day-forecast-card',
@@ -20,7 +22,7 @@ export class DayForecastCardComponent implements OnInit, OnDestroy {
   temperatureUnits: string;
   isDay: boolean = true;
 
-  constructor(private store: Store<FromApp.AppState>) {}
+  constructor(private store: Store<FromApp.AppState>, private router:Router) {}
 
   ngOnInit(): void {
     this.subscription = this.store.select('appState').subscribe((stateData) => {
@@ -36,7 +38,24 @@ export class DayForecastCardComponent implements OnInit, OnDestroy {
     this.forecast = this.isDay ? this.day : this.night;
   }
 
+  navigate(id:string){
+    this.store.dispatch(
+      new AppStateActions.ChangeCurrentLocation({
+          id:id,
+          name:this.location,
+          description:this.forecast.description,
+          iconNumber:this.forecast.iconNumber,
+          temperature:this.forecast.temperature
+        })
+    );
+    console.log('asd');
+    
+    this.router.navigate(['forecast'])
+  }
+
+
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
+
 }
