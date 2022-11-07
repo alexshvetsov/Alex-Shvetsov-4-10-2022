@@ -41,7 +41,7 @@ export class WeatherForecastService {
     }))
   }
 
-  getFutureWeather(cityKey: string): Observable<DayForecastInterface> {
+  getFutureWeather(cityKey: string): Observable<DayForecastInterface[]> {
     return this.http
       .get(`${this.futureWeatherURL}/${cityKey}?apikey=${this.API_KEY}`)
       .pipe(

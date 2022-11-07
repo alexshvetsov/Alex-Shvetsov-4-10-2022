@@ -1,8 +1,8 @@
-<div [ngClass]="isDarkMode? 'dark-theme' : 'light-theme'" fxLayout="column">
+<div fxFill [ngClass]="isDarkMode? 'dark-theme' : 'light-theme'" fxLayout="column">
   <app-toolbar></app-toolbar>
   <div fxLayoutAlign="end" class="toggle-area">
     <div>
-      <div class="unit-toggle" fxLayoutAlign="center center" fxLayoutGap="10px">
+      <div class="unit-toggle"fxLayoutGap="10px">
         <span fxFlexAlign="start">
           Temperature Units: {{ isCelsius ? "C" : "F" }}
         </span>
@@ -13,7 +13,7 @@
         >
         </mat-slide-toggle>
       </div>
-      <div class="unit-toggle" fxLayoutAlign="center center" fxLayoutGap="10px">
+      <div class="unit-toggle" fxLayoutAlign="end" fxLayoutGap="10px">
         <span fxFlexAlign="start">
           Switch Theme
         </span>
@@ -25,7 +25,7 @@
       </div>
     </div>
   </div>
-  <div fxFlex="grow">
+  <div class="content">
 
     <router-outlet></router-outlet>
   </div>

@@ -3,4 +3,5 @@ export interface LocationForecastInterface{
     temperature:number
     iconNumber:number
     description:string
+    name?:string
 }

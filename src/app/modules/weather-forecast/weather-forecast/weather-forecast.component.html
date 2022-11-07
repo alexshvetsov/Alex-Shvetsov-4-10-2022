@@ -4,8 +4,7 @@
       (selectedCity)="selectedCityChanged($event)"
     ></app-autocomplete-input>
   </div>
-
-  <ng-container *ngIf="futureForecast$ | async as futureForecast">
+  <ng-container *ngIf=" futureForecast">
     <div fxLayoutAlign="center">
       <div
         fxFlex="80"
@@ -15,7 +14,7 @@
         fxLayoutGap="30px">
         <div class="forecast-header" fxLayoutAlign="space-between center">
           <div fxLayout="column" fxLayoutGap="5px">
-            <span class="location">{{ currentLocaiton.name }}</span>
+            <span class="location">{{ defaultLocation.name }}</span>
             <span class="temperature">{{futureForecast[0] && futureForecast[0].day.temperature}}</span>
           </div>
           <button mat-raised-button color="primary">
@@ -24,8 +23,9 @@
               fxLayoutAlign="space-between center"
               fxLayoutGap="10px"
               (click)="updateFavorites()">
-              <span>{{ isFavorite ? "remove from favorites" : "add to favorites" }} </span>
-              <mat-icon>{{ !isFavorite ? "favorite_border" : "favorite"}}</mat-icon>
+              {{ isFavorite|json }}
+              <span>{{ isFavorite? "remove from favorites" : "add to favorites" }} </span>
+              <mat-icon>{{ !isFavorite? "favorite_border" : "favorite"}}</mat-icon>
             </div>
           </button>
         </div>
@@ -33,12 +33,16 @@
         <div
           class="forecast-details"
           fxLayout="row"
-          fxLayout.lt-md="column"
-          fxLayoutAlign="space-between center">
+          fxLayout="row wrap"
+          fxLayout.lt-xs="column"
+          fxLayoutGap.lt-md="10px"
+          fxLayoutAlign="space-around center">
           <ng-container *ngFor="let dayForecast of futureForecast">
             <app-day-forecast-card
               [date]="dayForecast.date"
-              [forecast]="dayForecast.day"
+              [day]="dayForecast.day"
+              [night]="dayForecast.night"
+              [id]="dayForecast.id"
             ></app-day-forecast-card>
           </ng-container>
         </div>
@@ -46,3 +50,4 @@
     </div>
   </ng-container>
 </div>
+<ng-container *ngIf="isFavorite$ | async"></ng-container>

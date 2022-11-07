@@ -1,9 +1,14 @@
 <div fxLayout="row" fxLayoutAlign="center">
-  <div fxFlex="80" fxLayout="column" fxLayoutAlign="center">
-    <div>Favorite Locations Forecast</div>
+  <div fxFlex="80" fxLayout="column" fxLayoutAlign="center" fxLayoutGap="15px">
+    <div fxLayout="row" fxLayoutAlign="center">
+
+        <div>Favorite Locations Forecast</div>
+    </div>
     <div fxLayout="row" fxLayoutAlign="space-around">
       <ng-container *ngFor="let location of favoritesForecasts$ | async">
         <app-day-forecast-card
+        [location]="location.name"
+        [id]="location.id"
           [forecast]="{
             temperature: location.temperature,
             description: location.description,
