@@ -8,6 +8,7 @@ import * as FromApp from '../../../store/app.reducer';
 import * as AppStateActions from '../../../store/app-store/app.actions';
 import { LocationForecastInterface } from 'src/app/utilitis/models/locationForecast.interface';
 import { DayForecastInterface } from 'src/app/utilitis/models/dayForecast.interface';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-weather-forecast',
@@ -15,59 +16,55 @@ import { DayForecastInterface } from 'src/app/utilitis/models/dayForecast.interf
   styleUrls: ['./weather-forecast.component.scss'],
 })
 export class WeatherForecastComponent implements OnInit {
-  defaultLocation: LocationInterface = { id: '215854', name: 'Tel Aviv' };
+  currentLocation: LocationInterface ={id:'215854',name:'Tel Aviv'} ;
+  defaultLocation: LocationInterface ={id:'215854',name:'Tel Aviv'} ;
   futureForecast$: Observable<DayForecastInterface[]>
   futureForecast: DayForecastInterface[]
   currentForecast$:Observable<LocationForecastInterface>
   currentForecast:LocationForecastInterface
-  isFavorite$: Observable<any>;
+  isFavorite$: Observable<boolean>;
   isFavorite: boolean;
 
   constructor(
     private weatherForecastService: WeatherForecastService,
-    private store: Store<FromApp.AppState>
+    private store: Store<FromApp.AppState>,
+    private route: ActivatedRoute 
   ) {}
 
   ngOnInit(): void {
+    this.currentLocation= this.route.snapshot.paramMap.get('id')?{id:this.route.snapshot.paramMap.get('id'),name:''} : this.currentLocation;
     this.isFavorite$=  this.fetchDataCheckIsFavorite()
   }
   selectedCityChanged(value: LocationInterface): void {
-    this.defaultLocation = value;
-    this.weatherForecastService.getFutureWeather(value.id).pipe(
-      switchMap(forecast=> this.weatherForecastService.getCurrentWeather(this.defaultLocation.id)))
-      .subscribe((currentForecast) => {
-        this.currentForecast=currentForecast
-        this.isFavorite$= this.fetchDataCheckIsFavorite()
-      });
+    this.currentLocation = value;
+    this.isFavorite$=  this.fetchDataCheckIsFavorite()
   }
 
   updateFavorites() {
     this.store.dispatch(
-      new AppStateActions.UpdateFavorites({...this.currentForecast, name:this.defaultLocation.name})
+      new AppStateActions.UpdateFavorites({...this.currentForecast})
     );
   }
 
-  fetchDataCheckIsFavorite():Observable<any>{
+  fetchDataCheckIsFavorite():Observable<boolean>{
     return this.store.select('appState').pipe(switchMap(appState=>{
-      
-      if(!appState.currentLocation && !this.currentForecast){
-        console.log('if',appState);
-        return this.weatherForecastService.getFutureWeather(this.defaultLocation.id).pipe(switchMap((forecast:DayForecastInterface[])=>{
+        if(appState.favorites.some(loc=>loc.id===this.currentLocation.id) &&  !this.currentLocation.name){
+          const location=appState.favorites.find(loc=>loc.id===this.currentLocation.id)
+          this.currentLocation.id=location.id
+          this.currentLocation.name=location.name
+        }else{
+          this.currentLocation= !!this.currentLocation.name?this.currentLocation :this.defaultLocation
+        }
+
+        return this.weatherForecastService.getFutureWeather(this.currentLocation.id).pipe(switchMap((forecast:DayForecastInterface[])=>{
           this.futureForecast=forecast
-          return this.weatherForecastService.getCurrentWeather(this.defaultLocation.id).pipe(switchMap((currentForecast:LocationForecastInterface)=>{
+          return this.weatherForecastService.getCurrentWeather(this.currentLocation).pipe(switchMap((currentForecast:LocationForecastInterface)=>{
             this.currentForecast=currentForecast
-            this.isFavorite=appState.favorites.some(loc=>loc.id===currentForecast.id)
-            return appState.favorites   
+            this.isFavorite=appState.favorites.some(loc=>loc.id===this.currentLocation.id)
+            return of(this.isFavorite)
           }))
         }))
-      }else{
-        console.log('else');
-        console.log(appState);
-        
-        this.isFavorite=appState.favorites.some(loc=>loc.id===(appState.currentLocation.id ||this.currentForecast.id))
-        console.log(appState.favorites.some(loc=>loc.id===(appState.currentLocation.id ||this.currentForecast.id)));
-
-        return of(false)}
+  
     }))
   }
 }

@@ -2,12 +2,17 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { WeatherForecastComponent } from './weather-forecast/weather-forecast.component';
 
-const routes: Routes = [{path:'',component:WeatherForecastComponent, children:[
-  {path:':id', component:WeatherForecastComponent}
-]}];
+const routes: Routes = [
+  {
+    path: '',
+    component: WeatherForecastComponent,
+    children: [],
+  },
+  { path: ':id', component: WeatherForecastComponent }
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class WeatherForecastRoutingModule { }
+export class WeatherForecastRoutingModule {}

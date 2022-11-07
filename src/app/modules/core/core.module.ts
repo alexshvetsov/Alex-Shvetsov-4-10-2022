@@ -7,6 +7,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { DayForecastCardComponent } from 'src/app/components/day-forecast-card/day-forecast-card.component';
 import { WeatherIconPipe } from 'src/app/utilitis/pipes/weather-icon.pipe';
 import { TemperatureUnitsPipe } from 'src/app/utilitis/pipes/temperature-units.pipe';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { TemperatureUnitsPipe } from 'src/app/utilitis/pipes/temperature-units.p
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
+    RouterModule
   ],
   exports: [
     MaterialModule,
@@ -30,7 +32,9 @@ import { TemperatureUnitsPipe } from 'src/app/utilitis/pipes/temperature-units.p
     FlexLayoutModule,
     DayForecastCardComponent,
     WeatherIconPipe,
-    TemperatureUnitsPipe
+    TemperatureUnitsPipe,
+    RouterModule
+
   ],
 })
 export class CoreModule {}

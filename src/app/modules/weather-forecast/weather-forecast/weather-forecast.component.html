@@ -14,7 +14,7 @@
         fxLayoutGap="30px">
         <div class="forecast-header" fxLayoutAlign="space-between center">
           <div fxLayout="column" fxLayoutGap="5px">
-            <span class="location">{{ defaultLocation.name }}</span>
+            <span class="location">{{currentLocation && currentLocation.name }}</span>
             <span class="temperature">{{futureForecast[0] && futureForecast[0].day.temperature}}</span>
           </div>
           <button mat-raised-button color="primary">

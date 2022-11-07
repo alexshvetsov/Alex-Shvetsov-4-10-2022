@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { DayForecastInterface } from '../models/dayForecast.interface';
 import { LocationForecastInterface } from '../models/locationForecast.interface';
+import { LocationInterface } from '../models/location.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -28,12 +29,14 @@ export class WeatherForecastService {
     );
   }
 
-  getCurrentWeather(cityKey: string): Observable<LocationForecastInterface> {
+  getCurrentWeather(location: LocationInterface): Observable<LocationForecastInterface> {
     return this.http.get(
-      `${this.currentWeatherURL}/${cityKey}?apikey=${this.API_KEY}`
+      `${this.currentWeatherURL}/${location.id}?apikey=${this.API_KEY}`
     ).pipe(map(value=>{
+
       return{
-        id:cityKey,
+        id:location.id,
+        name:location.name,
         temperature:value[0].Temperature.Imperial.Value,
         iconNumber:value[0].WeatherIcon,
         description:value[0].WeatherText,
