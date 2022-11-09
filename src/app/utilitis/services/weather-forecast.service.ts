@@ -15,11 +15,11 @@ export class WeatherForecastService {
 
   private API_KEY = environment.API_KEY;
   private autocompleteURL =
-    'http://dataservice.accuweather.com/locations/v1/cities/autocomplete';
+    'https://dataservice.accuweather.com/locations/v1/cities/autocomplete';
   private currentWeatherURL =
-    'http://dataservice.accuweather.com/currentconditions/v1';
+    'https://dataservice.accuweather.com/currentconditions/v1';
   private futureWeatherURL =
-    'http://dataservice.accuweather.com/forecasts/v1/daily/5day';
+    'https://dataservice.accuweather.com/forecasts/v1/daily/5day';
 
 
   getCityAPI(city: string): Observable<LocationInterface[]> {
