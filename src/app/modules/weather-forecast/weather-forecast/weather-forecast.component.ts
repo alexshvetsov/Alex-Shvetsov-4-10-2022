@@ -62,7 +62,7 @@ export class WeatherForecastComponent implements OnInit {
       return this.weatherForecastService.getFutureWeather(appState.currentLocation).pipe(switchMap((futureForecast:DayForecastInterface[])=>{
         this.futureForecast=futureForecast
         this.isFavorite=appState.favorites.some(loc=>loc.id===appState.currentLocation.id)
-      this.store.dispatch(new AppLoadingActions.ToggleLoading(false))
+        this.store.dispatch(new AppLoadingActions.ToggleLoading(false))
 
         return of(appState.currentLocation)
       }))

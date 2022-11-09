@@ -20,13 +20,14 @@ export class WeatherForecastService {
     'https://dataservice.accuweather.com/currentconditions/v1';
   private futureWeatherURL =
     'https://dataservice.accuweather.com/forecasts/v1/daily/5day';
-
+ 
 
   getCityAPI(city: string): Observable<LocationInterface[]> {
     return this.http.get(
       `${this.autocompleteURL}?apikey=${this.API_KEY}&q=${city}`
     ).pipe(map((cities:any[])=> {
-      return cities.map((city: any) => {return { id: city.Key, name: city.LocalizedName }})}))
+      return cities && cities.length>0 ? cities.map((city: any) => {return { id: city.Key, name: city.LocalizedName }}):[]
+    }))
   }
 
   getCurrentWeather(location: LocationInterface): Observable<LocationForecastInterface> {

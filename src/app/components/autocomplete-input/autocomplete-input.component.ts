@@ -11,7 +11,6 @@ import {
 import { LocationInterface } from 'src/app/utilitis/models/location.interface';
 import { WeatherForecastService } from 'src/app/utilitis/services/weather-forecast.service';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-autocomplete-input',
   templateUrl: './autocomplete-input.component.html',
