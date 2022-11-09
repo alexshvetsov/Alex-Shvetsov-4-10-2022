@@ -15,7 +15,11 @@
         <div class="forecast-header" fxLayoutAlign="space-between center">
           <div fxLayout="column" fxLayoutGap="5px">
             <span class="location">{{currentLocation && currentLocation.name }}</span>
-            <span class="temperature">{{futureForecast[0] && futureForecast[0].day.temperature}}</span>
+            <div fxLayoutAlign="center center">
+              <span class="temperature">{{currentForecast && currentForecast.temperature}}</span>
+              <img src="{{ currentForecast && currentForecast.iconNumber | weatherIcon }} " />
+
+            </div>
           </div>
           <button mat-raised-button color="primary">
             <div
@@ -23,7 +27,6 @@
               fxLayoutAlign="space-between center"
               fxLayoutGap="10px"
               (click)="updateFavorites()">
-              {{ isFavorite|json }}
               <span>{{ isFavorite? "remove from favorites" : "add to favorites" }} </span>
               <mat-icon>{{ !isFavorite? "favorite_border" : "favorite"}}</mat-icon>
             </div>
@@ -32,7 +35,6 @@
 
         <div
           class="forecast-details"
-          fxLayout="row"
           fxLayout="row wrap"
           fxLayout.lt-xs="column"
           fxLayoutAlign="space-around center">
@@ -50,3 +52,10 @@
   </ng-container>
 </div>
 <ng-container *ngIf="isFavorite$ | async"></ng-container>
+
+
+
+<div class="spinner" *ngIf="isLoading$ | async">
+
+  <mat-spinner></mat-spinner>
+</div> 

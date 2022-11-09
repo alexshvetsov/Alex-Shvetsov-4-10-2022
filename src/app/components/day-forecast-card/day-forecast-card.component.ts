@@ -12,7 +12,7 @@ import * as AppStateActions from '../../store/app-store/app.actions';
   styleUrls: ['./day-forecast-card.component.scss'],
 })
 export class DayForecastCardComponent implements OnInit, OnDestroy {
-  @Input() id:string
+  @Input() id: string;
   @Input() date: string = new Date().toString();
   @Input() location: string;
   @Input() forecast: forecastDetails;
@@ -21,9 +21,9 @@ export class DayForecastCardComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   temperatureUnits: string;
   isDay: boolean = true;
-  navigationUrl:string
+  navigationUrl: string;
 
-  constructor(private store: Store<FromApp.AppState>, private router:Router) {}
+  constructor(private store: Store<FromApp.AppState>, private router: Router) {}
 
   ngOnInit(): void {
     this.subscription = this.store.select('appState').subscribe((stateData) => {
@@ -32,7 +32,7 @@ export class DayForecastCardComponent implements OnInit, OnDestroy {
     if (!this.forecast) {
       this.forecast = this.day;
     }
-    this.navigationUrl='/forecast/'+this.id
+    this.navigationUrl = '/forecast/' + this.id;
   }
 
   isDayToggle() {
@@ -40,24 +40,17 @@ export class DayForecastCardComponent implements OnInit, OnDestroy {
     this.forecast = this.isDay ? this.day : this.night;
   }
 
-  navigate(id:string){
+  navigate(id: string) {
     this.store.dispatch(
       new AppStateActions.ChangeCurrentLocation({
-          id:id,
-          name:this.location,
-          description:this.forecast.description,
-          iconNumber:this.forecast.iconNumber,
-          temperature:this.forecast.temperature
-        })
+        id: id,
+        name: this.location,
+      })
     );
-    console.log('asd');
-    
-    this.router.navigate(['forecast'])
+    this.router.navigate(['forecast']);
   }
-
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
-
 }

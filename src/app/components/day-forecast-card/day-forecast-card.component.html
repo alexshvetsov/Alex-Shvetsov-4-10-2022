@@ -10,12 +10,13 @@
     {{ isDay ? "Day" : "Night" }}
   </mat-slide-toggle>
   <mat-card-content>
-    <!-- pipe will subscribe to store to get unit -->
     <p>{{ forecast.temperature | temperatureUnitsPipe: temperatureUnits }}</p>
     <p>{{ forecast.description }}</p>
     <img src="{{ forecast.iconNumber | weatherIcon }} " />
     <a [routerLink]="navigationUrl">
-      <button  *ngIf="location" mat-flat-button color="primary" >View full forecast</button>
+      <button *ngIf="location" mat-flat-button color="primary">
+        View full forecast
+      </button>
     </a>
   </mat-card-content>
 </mat-card>

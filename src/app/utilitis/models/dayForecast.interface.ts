@@ -1,5 +1,5 @@
 export interface DayForecastInterface {
-  id: number;
+  id: string;
   date: string;
   day: forecastDetails;
   night:forecastDetails;  

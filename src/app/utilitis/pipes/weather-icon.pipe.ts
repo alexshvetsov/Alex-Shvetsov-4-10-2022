@@ -7,6 +7,7 @@ export class WeatherIconPipe implements PipeTransform {
 
 
   transform(value: any): any {
+    if(isNaN(+value)) return ''
     if (value < 10) {
       value = `0${value}`;
     }

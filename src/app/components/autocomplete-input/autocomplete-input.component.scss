@@ -1,0 +1,14 @@
+.mat-autocomplete-panel.mat-autocomplete-visible{
+    background-color: #fff !important;
+}
+
+::ng-deep .cdk-overlay-pane {
+    background-color: #fff !important;
+    opacity: 100 !important;
+
+}
+
+.snackBar{
+    background-color: salmon;
+    font-size: 20px;
+}

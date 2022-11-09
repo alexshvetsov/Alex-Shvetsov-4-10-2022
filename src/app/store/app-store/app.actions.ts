@@ -1,4 +1,5 @@
 import { Action } from '@ngrx/store';
+import { LocationInterface } from 'src/app/utilitis/models/location.interface';
 import { LocationForecastInterface } from 'src/app/utilitis/models/locationForecast.interface';
 
 export const UPDATE_FAVORITES='[app] Update Favorites'
@@ -17,7 +18,7 @@ export class UpdateFavorites implements Action {
 
   export class ChangeCurrentLocation implements Action {
     readonly type = CHANGE_CURRENT_LOCATION;
-    constructor(public payload: LocationForecastInterface) {}
+    constructor(public payload: LocationInterface) {}
 
   }
   

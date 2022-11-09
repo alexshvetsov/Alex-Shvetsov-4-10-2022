@@ -2,6 +2,13 @@
 
 @include mat-core();
 
+.background{
+  background-color: salmon;
+  font-size: 16px;
+  padding: 10px;
+  color: black;
+}
+
 // Dark theme
 $dark-primary: mat-palette($mat-indigo);
 $dark-accent:  mat-palette($mat-amber);
