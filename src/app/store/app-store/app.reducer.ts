@@ -11,8 +11,7 @@ export interface State {
 const initialState: State = {
   units: 'F',
   favorites: [],
-  currentLocation: {id:'215854',name:'Tel Aviv'}
-
+  currentLocation: { id: '215854', name: 'Tel Aviv' },
 };
 
 export function appStateReducer(
@@ -22,9 +21,9 @@ export function appStateReducer(
   switch (action.type) {
     case AppActions.TOGGLE_UNITS:
       return { ...state, units: state.units === 'C' ? 'F' : 'C' };
-      
-      case AppActions.CHANGE_CURRENT_LOCATION:
-        return { ...state, currentLocation: action.payload };
+
+    case AppActions.CHANGE_CURRENT_LOCATION:
+      return { ...state, currentLocation: action.payload };
 
     case AppActions.UPDATE_FAVORITES:
       const location = state.favorites.find(
@@ -32,7 +31,7 @@ export function appStateReducer(
       );
       let newFavorites: LocationForecastInterface[];
       if (location) {
-        newFavorites = state.favorites.filter((loc) => loc.id !== location.id); 
+        newFavorites = state.favorites.filter((loc) => loc.id !== location.id);
       } else {
         newFavorites = [...state.favorites, action.payload];
       }

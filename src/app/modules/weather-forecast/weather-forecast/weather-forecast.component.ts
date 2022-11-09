@@ -19,6 +19,7 @@ import { ActivatedRoute } from '@angular/router';
 export class WeatherForecastComponent implements OnInit {
   
   currentLocation: LocationInterface ;
+  currentLocation$: Observable<LocationInterface> ;
   futureForecast: DayForecastInterface[]
   currentForecast:LocationForecastInterface
   isFavorite$: Observable<boolean>;
@@ -33,10 +34,12 @@ export class WeatherForecastComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.currentLocation= this.route.snapshot.paramMap.get('id')?{id:this.route.snapshot.paramMap.get('id'),name:''} : this.currentLocation;
-    this.isFavorite$=  this.fetchDataCheckIsFavorite()
+    // this.currentLocation= this.route.snapshot.paramMap.get('id')?{id:this.route.snapshot.paramMap.get('id'),name:''} : this.currentLocation;
+
+    this.currentLocation$=this.getForecast()
     this.isLoading$=this.store.select('loadingState').pipe(map(value=>value.loading))
   }
+
   selectedCityChanged(value: LocationInterface): void {
     this.currentLocation = value;
     this.store.dispatch(
@@ -45,7 +48,27 @@ export class WeatherForecastComponent implements OnInit {
         name: value.name,
       })
     );
-    this.isFavorite$=  this.fetchDataCheckIsFavorite()
+  }
+
+  getForecast():Observable<LocationInterface>{
+    return this.store.select('appState').pipe(switchMap((appState)=>{
+      if(this.futureForecast && appState.currentLocation.id ===this.futureForecast[0].locationId){
+        this.isFavorite=appState.favorites.some(loc=>loc.id===appState.currentLocation.id)
+        return of(appState.currentLocation)
+      }
+      debugger
+      this.store.dispatch(new AppLoadingActions.ToggleLoading(true))
+    return this.weatherForecastService.getCurrentWeather(appState.currentLocation).pipe(switchMap((currentForecast:LocationForecastInterface)=>{
+      this.currentForecast=currentForecast
+      return this.weatherForecastService.getFutureWeather(appState.currentLocation).pipe(switchMap((futureForecast:DayForecastInterface[])=>{
+        this.futureForecast=futureForecast
+        this.isFavorite=appState.favorites.some(loc=>loc.id===appState.currentLocation.id)
+      this.store.dispatch(new AppLoadingActions.ToggleLoading(false))
+
+        return of(appState.currentLocation)
+      }))
+    }))
+   }))
   }
 
   updateFavorites() {
@@ -54,34 +77,5 @@ export class WeatherForecastComponent implements OnInit {
     );
   }
 
-  fetchDataCheckIsFavorite():Observable<boolean>{
-    return this.store.select('appState').pipe(switchMap(appState=>{
-      this.store.dispatch(new AppLoadingActions.ToggleLoading(true))
-      if(this.futureForecast && appState.currentLocation.id === this.currentLocation.id){
-        debugger
-        this.isFavorite=appState.favorites.some(loc=>loc.id===this.currentLocation.id)
 
-        this.store.dispatch(new AppLoadingActions.ToggleLoading(false))
-
-        console.log(this.isFavorite);
-        debugger
-        return of(this.isFavorite)
-      }
-    
-        this.currentLocation= appState.currentLocation
-debugger        
-        return this.weatherForecastService.getFutureWeather(this.currentLocation.id).pipe(switchMap((forecast:DayForecastInterface[])=>{
-          this.futureForecast=forecast
-          
-          return this.weatherForecastService.getCurrentWeather(this.currentLocation).pipe(switchMap((currentForecast:LocationForecastInterface)=>{
-            this.currentForecast=currentForecast
-            this.isFavorite=appState.favorites.some(loc=>loc.id===this.currentLocation.id)
-            // 
-          setTimeout(()=>{  this.store.dispatch(new AppLoadingActions.ToggleLoading(false))},1000) 
-            return of(this.isFavorite)
-          }))
-        }))
-  
-    }))
-  }
 }

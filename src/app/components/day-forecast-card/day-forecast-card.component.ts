@@ -21,7 +21,6 @@ export class DayForecastCardComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   temperatureUnits: string;
   isDay: boolean = true;
-  navigationUrl: string;
 
   constructor(private store: Store<FromApp.AppState>, private router: Router) {}
 
@@ -32,7 +31,6 @@ export class DayForecastCardComponent implements OnInit, OnDestroy {
     if (!this.forecast) {
       this.forecast = this.day;
     }
-    this.navigationUrl = '/forecast/' + this.id;
   }
 
   isDayToggle() {
@@ -40,10 +38,10 @@ export class DayForecastCardComponent implements OnInit, OnDestroy {
     this.forecast = this.isDay ? this.day : this.night;
   }
 
-  navigate(id: string) {
+  navigate() {
     this.store.dispatch(
       new AppStateActions.ChangeCurrentLocation({
-        id: id,
+        id: this.id,
         name: this.location,
       })
     );

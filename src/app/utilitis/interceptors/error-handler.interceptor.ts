@@ -14,28 +14,25 @@ import * as AppLoadingActions from '../../store/loading-store/loading.actions';
 
 @Injectable({ providedIn: 'root' })
 export class ErrorHandlerInterceptor implements HttpInterceptor {
-
-
-  constructor(private snackBar:MatSnackBar,
-    private store: Store<FromApp.AppState>,
-    ) {}
-// close loading spinner after snackBare 
-intercept(
+  constructor(
+    private snackBar: MatSnackBar,
+    private store: Store<FromApp.AppState>
+  ) {}
+  intercept(
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error instanceof HttpErrorResponse) {
-          if(error.message=='No Cities that match your term'){
-            return
-          }
-       this.snackBar.open(error.message,'close',{verticalPosition:'top',panelClass:'background'})
-          this.store.dispatch(new AppLoadingActions.ToggleLoading(false))
+          this.snackBar.open(error.message, 'close', {
+            verticalPosition: 'top',
+            panelClass: 'background',
+          });
+          this.store.dispatch(new AppLoadingActions.ToggleLoading(false));
         }
         return throwError(() => error);
       })
-    )
+    );
   }
-
 }

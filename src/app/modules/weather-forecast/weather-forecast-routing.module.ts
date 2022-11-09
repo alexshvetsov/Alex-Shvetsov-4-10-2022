@@ -7,8 +7,7 @@ const routes: Routes = [
     path: '',
     component: WeatherForecastComponent,
     children: [],
-  },
-  { path: ':id', component: WeatherForecastComponent }
+  }
 ];
 
 @NgModule({

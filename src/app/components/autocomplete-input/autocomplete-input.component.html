@@ -1,16 +1,26 @@
 <form fxLayout="row" fxLayoutAlign="center">
-  <mat-form-field fxFlex="40%"  [appearance]="'standard'">
-    <mat-label>{{label || 'search ...'}}</mat-label> 
-    <input type="text"
-           placeholder="Choose Location"
-           matInput
-           [formControl]="myControl"
-           [matAutocomplete]="auto">
-    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onValueSelected($event)" [displayWith]="displayFn">
-      <mat-option *ngFor="let option of filteredOptions$ | async" [value]="option">
-        {{option.name}}
+  <mat-form-field fxFlex="40%" [appearance]="'standard'">
+    <mat-label>{{ label || "search ..." }}</mat-label>
+    <input
+      type="text"
+      placeholder="Choose Location"
+      matInput
+      [formControl]="searchControl"
+      [matAutocomplete]="auto"
+    />
+    <mat-autocomplete
+      autoActiveFirstOption
+      #auto="matAutocomplete"
+      (optionSelected)="onValueSelected($event)"
+      [displayWith]="displayFn"
+    >
+      <mat-option
+        *ngFor="let option of filteredOptions$ | async"
+        [value]="option"
+      >
+        {{ option.name }}
       </mat-option>
     </mat-autocomplete>
+    <mat-icon matSuffix>search</mat-icon>
   </mat-form-field>
 </form>
-

@@ -20,13 +20,13 @@ export class WeatherForecastService {
     'http://dataservice.accuweather.com/currentconditions/v1';
   private futureWeatherURL =
     'http://dataservice.accuweather.com/forecasts/v1/daily/5day';
-  private locationURL =
-    'http://dataservice.accuweather.com/locations/v1/cities/geoposition/search';
 
-  getCityAPI(city: string): Observable<any> {
+
+  getCityAPI(city: string): Observable<LocationInterface[]> {
     return this.http.get(
       `${this.autocompleteURL}?apikey=${this.API_KEY}&q=${city}`
-    );
+    ).pipe(map((cities:any[])=> {
+      return cities.map((city: any) => {return { id: city.Key, name: city.LocalizedName }})}))
   }
 
   getCurrentWeather(location: LocationInterface): Observable<LocationForecastInterface> {
@@ -44,14 +44,16 @@ export class WeatherForecastService {
     }))
   }
 
-  getFutureWeather(cityKey: string): Observable<DayForecastInterface[]> {
+  getFutureWeather(location: LocationInterface): Observable<DayForecastInterface[]> {
     return this.http
-      .get(`${this.futureWeatherURL}/${cityKey}?apikey=${this.API_KEY}`)
+      .get(`${this.futureWeatherURL}/${location.id}?apikey=${this.API_KEY}`)
       .pipe(
         map((value) => {
           return value['DailyForecasts'].map((value, index) => {
             return {
+              locationId:location.id,
               id: index,
+              name:location.name,
               date: new Date(value.Date),
               day: {
                 temperature: value.Temperature.Maximum.Value,
@@ -69,9 +71,4 @@ export class WeatherForecastService {
       );
   }
 
-  getByLocation(lat: number, long: number) {
-    return this.http.get(
-      `${this.locationURL}?apikey=${this.API_KEY}q=${lat}%${long}`
-    );
-  }
 }

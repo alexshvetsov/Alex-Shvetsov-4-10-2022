@@ -13,10 +13,8 @@
     <p>{{ forecast.temperature | temperatureUnitsPipe: temperatureUnits }}</p>
     <p>{{ forecast.description }}</p>
     <img src="{{ forecast.iconNumber | weatherIcon }} " />
-    <a [routerLink]="navigationUrl">
-      <button *ngIf="location" mat-flat-button color="primary">
+      <button *ngIf="location" (click)="navigate(forecast.id)" mat-flat-button color="primary">
         View full forecast
       </button>
-    </a>
   </mat-card-content>
 </mat-card>

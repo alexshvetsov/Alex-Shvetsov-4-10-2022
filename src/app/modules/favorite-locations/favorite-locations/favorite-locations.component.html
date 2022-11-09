@@ -6,8 +6,9 @@
     <div
     fxLayout="row wrap"
     fxLayout.lt-xs="column"
-    fxLayoutAlign="space-around center"
+    fxLayoutAlign="space-around"
     >
+    
       <ng-container *ngFor="let location of favoritesForecasts$ | async">
         <app-day-forecast-card
           [location]="location.name"

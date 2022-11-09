@@ -1,24 +1,28 @@
+<div class="" *ngIf="currentLocation$ | async"></div>
+<div class="spinner" *ngIf="isLoading$ | async">
+  <mat-spinner></mat-spinner>
+</div>
 <div fxLayout="column" fxLayoutAlign="center" fxLayoutGap="30px">
   <div class="search-input">
     <app-autocomplete-input
       (selectedCity)="selectedCityChanged($event)"
     ></app-autocomplete-input>
   </div>
-  <ng-container *ngIf=" futureForecast">
+  <ng-container *ngIf="futureForecast">
     <div fxLayoutAlign="center">
       <div
         fxFlex="80"
         class="forecast"
         fxLayout="column"
         fxLayoutAlign="center"
-        fxLayoutGap="30px">
+        fxLayoutGap="30px"
+      >
         <div class="forecast-header" fxLayoutAlign="space-between center">
           <div fxLayout="column" fxLayoutGap="5px">
-            <span class="location">{{currentLocation && currentLocation.name }}</span>
+            <span class="location">{{ currentForecast.name }}</span>
             <div fxLayoutAlign="center center">
-              <span class="temperature">{{currentForecast && currentForecast.temperature}}</span>
-              <img src="{{ currentForecast && currentForecast.iconNumber | weatherIcon }} " />
-
+              <span class="temperature">{{ currentForecast.temperature }}</span>
+              <img src="{{currentForecast && currentForecast.iconNumber | weatherIcon}} "/>
             </div>
           </div>
           <button mat-raised-button color="primary">
@@ -27,8 +31,8 @@
               fxLayoutAlign="space-between center"
               fxLayoutGap="10px"
               (click)="updateFavorites()">
-              <span>{{ isFavorite? "remove from favorites" : "add to favorites" }} </span>
-              <mat-icon>{{ !isFavorite? "favorite_border" : "favorite"}}</mat-icon>
+              <span>{{ isFavorite ? "remove from favorites" : "add to favorites" }}</span>
+              <mat-icon>{{!isFavorite ? "favorite_border" : "favorite" }}</mat-icon>
             </div>
           </button>
         </div>
@@ -37,7 +41,8 @@
           class="forecast-details"
           fxLayout="row wrap"
           fxLayout.lt-xs="column"
-          fxLayoutAlign="space-around center">
+          fxLayoutAlign="space-around "
+        >
           <ng-container *ngFor="let dayForecast of futureForecast">
             <app-day-forecast-card
               [date]="dayForecast.date"
@@ -51,11 +56,3 @@
     </div>
   </ng-container>
 </div>
-<ng-container *ngIf="isFavorite$ | async"></ng-container>
-
-
-
-<div class="spinner" *ngIf="isLoading$ | async">
-
-  <mat-spinner></mat-spinner>
-</div> 

@@ -21,8 +21,8 @@ $dark-theme:   mat-dark-theme($dark-primary, $dark-accent);
 }
 
 // Light theme
-$light-primary: mat-palette($mat-grey);
-$light-accent: mat-palette($mat-blue);
+$light-primary: mat-palette($mat-yellow);
+$light-accent: mat-palette($mat-amber);
 
 $light-theme: mat-light-theme($light-primary, $light-accent);
 

@@ -2,12 +2,10 @@ import * as LoadingActions from './loading.actions';
 
 export interface State {
   loading: boolean;
-
 }
 
 const initialState: State = {
-  loading: false
-
+  loading: false,
 };
 
 export function appStateReducer(
@@ -17,7 +15,7 @@ export function appStateReducer(
   switch (action.type) {
     case LoadingActions.TOGGLE_LOADING:
       return { ...state, loading: action.payload };
-    
+
     default:
       return state;
   }

@@ -18,47 +18,30 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./autocomplete-input.component.scss'],
 })
 export class AutocompleteInputComponent implements OnInit {
-  myControl = new FormControl('');
+  searchControl = new FormControl('');
   filteredOptions$: Observable<LocationInterface[]> = of([]);
-  currentCity:LocationInterface;
+  currentCity: LocationInterface;
   @Input() label!: string;
   @Output() selectedCity = new EventEmitter<LocationInterface>();
 
-  constructor(
-    private weatherForecastService: WeatherForecastService,
-    private snackBar: MatSnackBar
-  ) {}
+  constructor(private weatherForecastService: WeatherForecastService) {}
 
   ngOnInit() {
     this.filteredOptions$ = this.onSearchChanged();
   }
 
   onSearchChanged(): Observable<LocationInterface[]> {
-    return this.myControl.valueChanges.pipe(
-      startWith(''),
-      debounceTime(200),
+    return this.searchControl.valueChanges.pipe(
+      debounceTime(400),
       distinctUntilChanged(),
       switchMap((value) => {
         return this.weatherForecastService.getCityAPI(value || '').pipe(
           map((cities) => {
-debugger
-            if (cities && cities.length == 0 && this.myControl.value !== this.selectedCity.name) {
-              this.snackBar.open('No Cities that match your term', 'close',{verticalPosition:'top',panelClass:'snackBar'});
+            debugger
+            if (cities.length === 1) {
+              this.selectedCity.emit(cities[0]);
             }
-            if (cities && cities.length === 1 && this.myControl.value) {
-              const selectedCity: LocationInterface = {
-                id: cities[0].Key,
-                name: cities[0].LocalizedName,
-              };
-              this.currentCity=selectedCity
-              this.selectedCity.emit(selectedCity);
-            }
-            return (
-              cities &&
-              cities.map((city: any) => {
-                return { id: city.Key, name: city.LocalizedName };
-              })
-            );
+            return cities;
           })
         );
       })
