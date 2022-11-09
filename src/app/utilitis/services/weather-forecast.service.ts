@@ -33,7 +33,6 @@ export class WeatherForecastService {
     return this.http.get(
       `${this.currentWeatherURL}/${location.id}?apikey=${this.API_KEY}`
     ).pipe(map(value=>{
-
       return{
         id:location.id,
         name:location.name,

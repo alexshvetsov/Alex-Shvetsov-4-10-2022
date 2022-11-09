@@ -37,7 +37,6 @@ export class AutocompleteInputComponent implements OnInit {
       switchMap((value) => {
         return this.weatherForecastService.getCityAPI(value || '').pipe(
           map((cities) => {
-            debugger
             if (cities.length === 1) {
               this.selectedCity.emit(cities[0]);
             }

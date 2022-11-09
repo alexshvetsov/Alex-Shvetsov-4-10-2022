@@ -56,7 +56,6 @@ export class WeatherForecastComponent implements OnInit {
         this.isFavorite=appState.favorites.some(loc=>loc.id===appState.currentLocation.id)
         return of(appState.currentLocation)
       }
-      debugger
       this.store.dispatch(new AppLoadingActions.ToggleLoading(true))
     return this.weatherForecastService.getCurrentWeather(appState.currentLocation).pipe(switchMap((currentForecast:LocationForecastInterface)=>{
       this.currentForecast=currentForecast
